@@ -11,7 +11,7 @@ jobs:
         with:
           python-version: '3.9.9'
       - name: Build binary
-        run: ./pleasew build //:arcat
+        run: ./pleasew build //package:all
       - name: Run tests
         run: ./pleasew test
       - name: Archive logs
