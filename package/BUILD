@@ -13,7 +13,9 @@ filegroup(
     srcs = [cross_compile(arch) for arch in [
         "darwin_amd64",
         "darwin_arm64",
+        "freebsd_amd64",
         "linux_amd64",
+        "linux_arm64",
     ]],
     labels = ["hlink:plz-out/package"],
 )
