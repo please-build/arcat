@@ -6,7 +6,6 @@ go_library(
         "//tools/please_pex/pex",
     ],
     deps = [
-        "//src/fs",
         "//third_party/go:logging",
         "//third_party/go:testify",
     ],

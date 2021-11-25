@@ -4,16 +4,16 @@ package ar
 import (
 	"bufio"
 	"io"
+	"io/fs"
 	"os"
 	"path"
+	"path/filepath"
 	"runtime"
 	"strings"
 	"time"
 
 	"github.com/peterebden/ar"
 	"gopkg.in/op/go-logging.v1"
-
-	"github.com/thought-machine/please/src/fs"
 )
 
 var log = logging.MustGetLogger("ar")
@@ -116,8 +116,8 @@ func Create(srcs []string, out string, combine, rename bool) error {
 // Find finds all the .a files under the current directory and returns their names.
 func Find() ([]string, error) {
 	ret := []string{}
-	return ret, fs.Walk(".", func(name string, isDir bool) error {
-		if strings.HasSuffix(name, ".a") && !isDir {
+	return ret, filepath.WalkDir(".", func(name string, d fs.DirEntry, err error) error {
+		if strings.HasSuffix(name, ".a") && !d.IsDir() {
 			ret = append(ret, name)
 		}
 		return nil

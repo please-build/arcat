@@ -1,7 +1,7 @@
 go_library(
     name = "tar",
     srcs = ["tar.go"],
-    visibility = ["///..."],
+    visibility = ["//..."],
     deps = ["//third_party/go:xz"],
 )
 

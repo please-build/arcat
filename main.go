@@ -14,14 +14,13 @@ import (
 	"os"
 	"path/filepath"
 
-	"gopkg.in/op/go-logging.v1"
+	"github.com/peterebden/go-cli-init/v5/flags"
+	"github.com/peterebden/go-cli-init/v5/logging"
 
-	"github.com/thought-machine/please/src/cli"
-	"github.com/thought-machine/please/src/fs"
-	"github.com/thought-machine/please/tools/jarcat/ar"
-	"github.com/thought-machine/please/tools/jarcat/tar"
-	"github.com/thought-machine/please/tools/jarcat/unzip"
-	"github.com/thought-machine/please/tools/jarcat/zip"
+	"github.com/please-build/arcat/ar"
+	"github.com/please-build/arcat/tar"
+	"github.com/please-build/arcat/unzip"
+	"github.com/please-build/arcat/zip"
 )
 
 var javaExcludePrefixes = []string{
@@ -30,7 +29,7 @@ var javaExcludePrefixes = []string{
 	"META-INF/*.SF", "META-INF/*.RSA", "META-INF/*.LIST",
 }
 
-var log = logging.MustGetLogger("jarcat")
+var log = logging.MustGetLogger()
 
 func must(err error) {
 	if err != nil {
@@ -59,10 +58,10 @@ func mustReadPreamble(path string) string {
 
 var opts = struct {
 	Usage     string
-	Verbosity cli.Verbosity `short:"v" long:"verbosity" default:"warning" description:"Verbosity of output (higher number = more output)"`
+	Verbosity logging.Verbosity `short:"v" long:"verbosity" default:"warning" description:"Verbosity of output (higher number = more output)"`
 
 	Zip struct {
-		In                    cli.StdinStrings  `short:"i" long:"input" description:"Input directory" required:"true"`
+		In                    flags.StdinStrings  `short:"i" long:"input" description:"Input directory" required:"true"`
 		Out                   string            `short:"o" long:"output" env:"OUT" description:"Output filename" required:"true"`
 		Suffix                []string          `short:"s" long:"suffix" default:".jar" description:"Suffix of files to include"`
 		ExcludeSuffix         []string          `short:"e" long:"exclude_suffix" description:"Suffix of files to exclude"`
@@ -116,9 +115,9 @@ var opts = struct {
 	} `command:"ar" alias:"a" description:"Creates a new ar archive."`
 }{
 	Usage: `
-Jarcat is a binary shipped with Please that helps it operate on .jar and .zip files.
+arcat is a tool for creating, extracting and concatenating archives..
 
-Its original and most useful feature is performing efficient concatenation of .jar files
+Its original and most unique feature is performing efficient concatenation of .jar files
 when compiling Java code. This is possible with zip files because each file is compressed
 individually so it's possible to combine them without decompressing and recompressing each one.
 
@@ -135,13 +134,13 @@ Any apparent relationship between the name of this tool and bonsai kittens is co
 }
 
 func main() {
-	command := cli.ParseFlagsOrDie("Jarcat", &opts)
+	command := flags.ParseFlagsOrDie("arcat", &opts, nil)
 	if opts.Zip.DumbMode {
 		opts.Zip.Suffix = nil
 		opts.Zip.ExcludeSuffix = nil
 		opts.Zip.IncludeOther = true
 	}
-	cli.InitLogging(opts.Verbosity)
+	logging.InitLogging(opts.Verbosity)
 
 	if command == "tar" {
 		if opts.Tar.Xzip && opts.Tar.Gzip {
@@ -242,16 +241,7 @@ func main() {
 
 	f.Close()
 
-	err = os.Rename(filename, opts.Zip.Out)
-	if err != nil {
-		// Fall back to copy
-		err = fs.CopyFile(filename, opts.Zip.Out, 0644)
-		if err != nil {
-			panic(fmt.Sprintf("unable to copy the file we just wrote (%s): %s", filename, err))
-		}
-		err = os.Remove(filename)
-		if err != nil {
-			panic(fmt.Sprintf("unable to remove the temp file (%s): %s", filename, err))
-		}
+	if err := os.Rename(filename, opts.Zip.Out); err != nil {
+		panic(fmt.Sprintf("Failed to rename output file: %s", err))
 	}
 }

@@ -1,14 +1,13 @@
 go_binary(
-    name = "jarcat",
+    name = "arcat",
     srcs = ["main.go"],
     visibility = ["PUBLIC"],
     deps = [
-        "//src/cli",
-        "//src/fs",
+        "//third_party/go:cli-init",
         "//third_party/go:logging",
-        "///ar",
-        "///tar",
-        "///unzip",
-        "///zip",
+        "//ar",
+        "//tar",
+        "//unzip",
+        "//zip",
     ],
 )

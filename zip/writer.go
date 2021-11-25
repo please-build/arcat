@@ -7,6 +7,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"io"
+	"io/fs"
 	"io/ioutil"
 	"os"
 	"path"
@@ -16,8 +17,6 @@ import (
 	"time"
 
 	"gopkg.in/op/go-logging.v1"
-
-	"github.com/thought-machine/please/src/fs"
 )
 
 var log = logging.MustGetLogger("zip")
@@ -213,13 +212,17 @@ func (f *File) AddZipFile(filepath string) error {
 }
 
 // walk is a callback to walk a file tree and add all files found in it.
-func (f *File) walk(path string, mode fs.Mode) error {
-	if path != f.input && mode.IsSymlink() {
+func (f *File) walk(path string, entry fs.DirEntry, err error) error {
+	if err != nil {
+		return err
+	}
+	mode := entry.Type()
+	if path != f.input && ((mode & fs.ModeSymlink) == fs.ModeSymlink) {
 		if resolved, err := filepath.EvalSymlinks(path); err != nil {
 			return err
 		} else if mode.IsDir() {
 			// TODO(peterebden): Is this case still needed?
-			return fs.WalkMode(resolved, f.walk)
+			return filepath.WalkDir(resolved, f.walk)
 		}
 	}
 	for _, excl := range f.Exclude {
@@ -300,7 +303,7 @@ func samePaths(a, b string) bool {
 // AddFiles walks the given directory and adds any zip files (determined by suffix) that it finds within.
 func (f *File) AddFiles(in string) error {
 	f.input = in
-	return fs.WalkMode(in, f.walk)
+	return filepath.WalkDir(in, f.walk)
 }
 
 // shouldExcludeSuffix returns true if the given filename has a suffix that should be excluded.

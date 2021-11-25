@@ -15,7 +15,7 @@ import (
 	"github.com/ulikunitz/xz"
 )
 
-var testInputs = []string{"tools/jarcat/tar/test_data/dir1", "tools/jarcat/tar/test_data/dir2", "tools/jarcat/tar/test_data/symlink"}
+var testInputs = []string{"tar/test_data/dir1", "tar/test_data/dir2", "tar/test_data/symlink"}
 
 func TestNoCompression(t *testing.T) {
 	filename := "test_no_compression.tar"
@@ -94,30 +94,30 @@ func TestWithoutFlatten(t *testing.T) {
 
 	m := ReadTar(t, filename, false, false)
 	assert.EqualValues(t, map[string]string{
-		"tools/jarcat/tar/test_data/dir1/file1.txt":     "test file 1",
-		"tools/jarcat/tar/test_data/dir2/file2.txt":     "test file 2",
-		"tools/jarcat/tar/test_data/symlink/source.txt": "symlink file",
-		"tools/jarcat/tar/test_data/symlink/link.txt":   "",
+		"tar/test_data/dir1/file1.txt":     "test file 1",
+		"tar/test_data/dir2/file2.txt":     "test file 2",
+		"tar/test_data/symlink/source.txt": "symlink file",
+		"tar/test_data/symlink/link.txt":   "",
 	}, toFilenameMap(m))
 }
 
 func TestStripPrefixWithoutFlatten(t *testing.T) {
 	filename := "test_strip_prefix_without_flatten.tar"
-	err := Write(filename, testInputs, "", false, false, false, "tools/jarcat/tar/test_data/dir1")
+	err := Write(filename, testInputs, "", false, false, false, "tar/test_data/dir1")
 	require.NoError(t, err)
 
 	m := ReadTar(t, filename, false, false)
 	assert.EqualValues(t, map[string]string{
 		"file1.txt": "test file 1",
-		"tools/jarcat/tar/test_data/dir2/file2.txt":     "test file 2",
-		"tools/jarcat/tar/test_data/symlink/source.txt": "symlink file",
-		"tools/jarcat/tar/test_data/symlink/link.txt":   "",
+		"tar/test_data/dir2/file2.txt":     "test file 2",
+		"tar/test_data/symlink/source.txt": "symlink file",
+		"tar/test_data/symlink/link.txt":   "",
 	}, toFilenameMap(m))
 }
 
 func TestStripPrefixWithPrefix(t *testing.T) {
 	filename := "test_strip_prefix_with_prefix.tar"
-	err := Write(filename, testInputs, "prefix", false, false, false, "tools/jarcat/tar/test_data")
+	err := Write(filename, testInputs, "prefix", false, false, false, "tar/test_data")
 	require.NoError(t, err)
 
 	m := ReadTar(t, filename, false, false)
@@ -131,16 +131,16 @@ func TestStripPrefixWithPrefix(t *testing.T) {
 
 func TestSymlink(t *testing.T) {
 	filename := "test_symlink.tar"
-	err := Write(filename, []string{"tools/jarcat/tar/test_data/symlink"}, "", false, false, false, "")
+	err := Write(filename, []string{"tar/test_data/symlink"}, "", false, false, false, "")
 	require.NoError(t, err)
 
 	m := ReadTar(t, filename, false, false)
 	assert.EqualValues(t, map[string]string{
-		"tools/jarcat/tar/test_data/symlink/source.txt": "symlink file",
-		"tools/jarcat/tar/test_data/symlink/link.txt":   "",
+		"tar/test_data/symlink/source.txt": "symlink file",
+		"tar/test_data/symlink/link.txt":   "",
 	}, toFilenameMap(m))
 	for hdr := range m {
-		if hdr.Name == "tools/jarcat/tar/test_data/symlink/link.txt" {
+		if hdr.Name == "tar/test_data/symlink/link.txt" {
 			assert.EqualValues(t, hdr.Linkname, "./source.txt")
 		}
 	}
