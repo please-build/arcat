@@ -10,6 +10,8 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.9.9'
+      - name: Build binary
+        run: ./pleasew build //:arcat
       - name: Run tests
         run: ./pleasew test
       - name: Archive logs
