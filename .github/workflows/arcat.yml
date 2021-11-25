@@ -1,4 +1,4 @@
-name: godeps
+name: arcat
 on: [push, pull_request]
 jobs:
   test:
