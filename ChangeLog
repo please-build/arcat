@@ -1,3 +1,8 @@
+Version 1.0.0
+-------------
+    * First standalone release of this tool.
+
+
 Version 0.9.1
 -------------
     * Linux binaries are now statically linked.
@@ -5,4 +10,4 @@ Version 0.9.1
 
 Version 0.9.0
 -------------
-    * First standalone release
+    * First beta release
