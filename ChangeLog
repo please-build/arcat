@@ -1,3 +1,9 @@
+Version 1.0.1
+-------------
+    * Use osusergo and netgo for the stdlib to avoid some potential segfaults if
+      the glibc version differs.
+
+
 Version 1.0.0
 -------------
     * First standalone release of this tool.
