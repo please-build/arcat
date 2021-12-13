@@ -1,3 +1,6 @@
+[please]
+version = >=16.17.1
+
 [go]
 gotool = //third_party/go:toolchain|go
 importpath = github.com/please-build/arcat
