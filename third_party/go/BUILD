@@ -1,7 +1,5 @@
 package(default_visibility = ["PUBLIC"])
 
-subinclude("//build_defs:go_toolchain")
-
 go_toolchain(
     name = "toolchain",
     architectures = [
@@ -11,7 +9,7 @@ go_toolchain(
         "linux_amd64",
         "linux_arm64",
     ],
-    version = "1.17.3",
+    version = "1.17.5",
     tags = [
         "osusergo",
         "netgo",
