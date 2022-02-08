@@ -1,3 +1,8 @@
+Version 1.0.2
+-------------
+    *  Don't add `__init__.py` when there's a `__init__.pyi` file #7
+
+
 Version 1.0.1
 -------------
     * Use osusergo and netgo for the stdlib to avoid some potential segfaults if
