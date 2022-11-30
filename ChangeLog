@@ -1,3 +1,8 @@
+Version 1.0.3
+-------------
+    * Significantly increase the performance of xz decompression operations in
+      the `unzip` command.
+
 Version 1.0.2
 -------------
     *  Don't add `__init__.py` when there's a `__init__.pyi` file #7
