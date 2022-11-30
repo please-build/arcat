@@ -16,7 +16,7 @@ import (
 	"sync"
 
 	"github.com/klauspost/compress/zstd"
-	"github.com/ulikunitz/xz"
+	"github.com/xi2/xz"
 )
 
 // concurrency controls the maximum level of concurrency we'll allow.
@@ -64,7 +64,7 @@ func (e *extractor) Extract() error {
 	}
 	// Reset back to the start of the file and try xz
 	f.Seek(0, io.SeekStart)
-	if r, err := xz.NewReader(f); err == nil {
+	if r, err := xz.NewReader(f, 0); err == nil {
 		return e.extractTar(r)
 	}
 	// Reset again and try bzip2

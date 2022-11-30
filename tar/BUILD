@@ -2,7 +2,9 @@ go_library(
     name = "tar",
     srcs = ["tar.go"],
     visibility = ["//..."],
-    deps = ["//third_party/go:xz"],
+    deps = [
+        "//third_party/go:ulikunitz_xz",
+    ],
 )
 
 go_test(
@@ -12,6 +14,6 @@ go_test(
     deps = [
         ":tar",
         "//third_party/go:testify",
-        "//third_party/go:xz",
+        "//third_party/go:ulikunitz_xz",
     ],
 )
