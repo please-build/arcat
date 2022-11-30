@@ -3,7 +3,7 @@ go_library(
     srcs = ["unzip.go"],
     visibility = ["//:all"],
     deps = [
-        "//third_party/go:xz",
+        "//third_party/go:xi2_xz",
         "//third_party/go:zstd",
     ],
 )

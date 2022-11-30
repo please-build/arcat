@@ -105,7 +105,7 @@ go_module(
 )
 
 go_module(
-    name = "xz",
+    name = "ulikunitz_xz",
     install = [
         "internal/...",
         ".",
@@ -114,6 +114,14 @@ go_module(
     licences = ["BSD-3-Clause"],
     module = "github.com/ulikunitz/xz",
     version = "v0.5.10",
+    visibility = ["PUBLIC"],
+)
+
+go_module(
+    name = "xi2_xz",
+    licences = ["Public Domain"],
+    module = "github.com/xi2/xz",
+    version = "v0.0.0-20171230120015-48954b6210f8",
     visibility = ["PUBLIC"],
 )
 
