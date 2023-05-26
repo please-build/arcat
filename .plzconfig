@@ -1,6 +1,11 @@
-[please]
-version = >=16.17.1
+[parse]
+preloadsubincludes = ///go//build_defs:go
 
-[go]
+[please]
+version = >=17.0.0
+
+[Plugin "go"]
+Target = //plugins:go
+pleasegotool = ///go//tools/please_go:bootstrap
 gotool = //third_party/go:toolchain|go
 importpath = github.com/please-build/arcat
