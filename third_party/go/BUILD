@@ -100,7 +100,7 @@ go_module(
     name = "ar",
     licences = ["MIT"],
     module = "github.com/peterebden/ar",
-    version = "v0.0.0-20181115090543-a0ae3a11a518",
+    version = "v0.0.0-20230524111245-4f7c7b065694",
     visibility = ["PUBLIC"],
 )
 
