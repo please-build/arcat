@@ -1,3 +1,7 @@
+Version 1.0.4
+-------------
+    * Write ar archives that can be read by llvm-ar.
+
 Version 1.0.3
 -------------
     * Significantly increase the performance of xz decompression operations in
