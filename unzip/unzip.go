@@ -174,7 +174,7 @@ func (e *extractor) extractFile(f *zip.File) error {
 	if err := e.makeParentDir(out); err != nil {
 		return err
 	}
-	o, err := os.OpenFile(out, os.O_WRONLY|os.O_CREATE, f.Mode())
+	o, err := os.OpenFile(out, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
 	if err != nil {
 		return err
 	}
