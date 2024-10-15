@@ -220,12 +220,13 @@ func main() {
 		opts.Zip.Preamble = mustReadPreamble(opts.Zip.PreambleFrom)
 	}
 	if opts.Zip.Preamble != "" {
-		must(f.WritePreamble([]byte(opts.Zip.Preamble + "\n")))
+		must(f.WritePreambleBytes([]byte(opts.Zip.Preamble + "\n")))
 	}
 	if opts.Zip.PreambleFile != "" {
-		b, err := ioutil.ReadFile(opts.Zip.PreambleFile)
+		pf, err := os.Open(opts.Zip.PreambleFile)
 		must(err)
-		must(f.WritePreamble(b))
+		defer pf.Close()
+		must(f.WritePreambleFile(pf))
 	}
 	if opts.Zip.MainClass != "" {
 		must(f.AddManifest(opts.Zip.MainClass))
