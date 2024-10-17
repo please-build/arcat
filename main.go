@@ -32,20 +32,6 @@ var javaExcludePrefixes = []string{
 
 var log = logging.MustGetLogger()
 
-// countFunc returns the number of elements in s that satisfy f.
-func countFunc[S []E, E comparable](s S, f func(e E) bool) int {
-	var n int
-	for {
-		i := slices.IndexFunc(s, f)
-		if i == -1 {
-			break
-		}
-		n++
-		s = s[i+1:]
-	}
-	return n
-}
-
 func must(err error) {
 	if err != nil {
 		log.Fatalf("%s", err)
@@ -194,11 +180,11 @@ func main() {
 		os.Exit(0)
 	}
 
-	if countFunc([]string{
+	if len(slices.DeleteFunc([]string{
 		opts.Zip.Preamble,
 		opts.Zip.PreambleFrom,
 		opts.Zip.PreambleFile,
-	}, func(s string) bool { return s != "" }) > 1 {
+	}, func(s string) bool { return s == "" })) > 1 {
 		log.Fatal("Only one of --preamble, --preamble_from or --preamble_file may be specified.")
 	}
 
