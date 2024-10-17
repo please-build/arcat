@@ -13,6 +13,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"slices"
 
 	"github.com/peterebden/go-cli-init/v5/flags"
 	"github.com/peterebden/go-cli-init/v5/logging"
@@ -177,6 +178,14 @@ func main() {
 			log.Fatalf("Error combining archives: %s", err)
 		}
 		os.Exit(0)
+	}
+
+	if len(slices.DeleteFunc([]string{
+		opts.Zip.Preamble,
+		opts.Zip.PreambleFrom,
+		opts.Zip.PreambleFile,
+	}, func(s string) bool { return s == "" })) > 1 {
+		log.Fatal("Only one of --preamble, --preamble_from or --preamble_file may be specified.")
 	}
 
 	if opts.Zip.ExcludeJavaPrefixes {
