@@ -493,8 +493,8 @@ func (f *File) WritePreambleBytes(preamble []byte) error {
 	return err
 }
 
-// WritePreambleFile writes a file as a preamble to the zipfile.
-func (f *File) WritePreambleFile(preamble fs.File) error {
+// WritePreamble writes everything read from an io.Reader as a preamble to the zipfile.
+func (f *File) WritePreamble(preamble io.Reader) error {
 	length, err := io.Copy(f.f, preamble)
 	f.preambleLength += length
 	f.w.SetOffset(f.preambleLength)

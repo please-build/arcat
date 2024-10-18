@@ -1,6 +1,9 @@
 go_library(
     name = "zip",
-    srcs = ["writer.go"],
+    srcs = glob(
+        ["*.go"],
+        exclude = ["*_test.go"],
+    ),
     visibility = [
         "//:all",
         "//tools/please_pex/pex",
@@ -8,6 +11,17 @@ go_library(
     deps = [
         "//third_party/go:logging",
         "//third_party/go:testify",
+    ],
+)
+
+go_test(
+    name = "preamble_test",
+    srcs = ["preamble_test.go"],
+    data = [
+        "test_data_4",
+    ],
+    deps = [
+        ":zip",
     ],
 )
 
