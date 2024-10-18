@@ -8,7 +8,6 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -38,25 +37,6 @@ func must(err error) {
 	}
 }
 
-// mustReadPreamble reads and returns the first line of a file.
-func mustReadPreamble(path string) string {
-	f, err := os.Open(path)
-	if err != nil {
-		log.Fatalf("%s", err)
-	}
-	defer f.Close()
-	r := bufio.NewReader(f)
-	s, err := r.ReadString('\n')
-	must(err)
-	if s == "#!/bin/sh\n" {
-		// Preamble continues onto the next line. Read that too.
-		s2, err := r.ReadString('\n')
-		must(err)
-		return s + s2
-	}
-	return s
-}
-
 var opts = struct {
 	Usage     string
 	Verbosity logging.Verbosity `short:"v" long:"verbosity" default:"warning" description:"Verbosity of output (higher number = more output)"`
@@ -70,9 +50,9 @@ var opts = struct {
 		ExcludeInternalPrefix []string          `short:"x" long:"exclude_internal_prefix" description:"Prefix of files to exclude"`
 		IncludeInternalPrefix []string          `short:"t" long:"include_internal_prefix" description:"Prefix of files to include"`
 		StripPrefix           string            `long:"strip_prefix" description:"Prefix to strip off file names"`
-		Preamble              string            `short:"p" long:"preamble" description:"Leading string to prepend to written zip file"`
-		PreambleFrom          string            `long:"preamble_from" description:"Read the first line of this file and use as --preamble."`
-		PreambleFile          string            `long:"preamble_file" description:"Concatenate zip file onto the end of this file"`
+		Preamble              string            `short:"p" long:"preamble" description:"Prepend this string to generated zip file"`
+		PreambleFrom          string            `long:"preamble_from" description:"Prepend non-zip leading data from this file to generated zip file"`
+		PreambleFile          string            `long:"preamble_file" description:"Prepend contents of this file to generated zip file"`
 		MainClass             string            `short:"m" long:"main_class" description:"Write a Java manifest file containing the given main class."`
 		Manifest              string            `long:"manifest" description:"Use the given file as a Java manifest"`
 		ExcludeJavaPrefixes   bool              `short:"j" long:"exclude_java_prefixes" description:"Use default Java exclusions"`
@@ -225,17 +205,21 @@ func main() {
 	// Never descend into the _please dir
 	f.Exclude = append(f.Exclude, "_please")
 
-	if opts.Zip.PreambleFrom != "" {
-		opts.Zip.Preamble = mustReadPreamble(opts.Zip.PreambleFrom)
-	}
 	if opts.Zip.Preamble != "" {
+		log.Debug("Adding preamble from command line option")
 		must(f.WritePreambleBytes([]byte(opts.Zip.Preamble + "\n")))
-	}
-	if opts.Zip.PreambleFile != "" {
+	} else if opts.Zip.PreambleFrom != "" {
+		log.Debugf("Adding preamble from non-zip data in %s", opts.Zip.PreambleFrom)
+		pr, err := zip.Preamble(opts.Zip.PreambleFrom)
+		must(err)
+		defer pr.Close()
+		must(f.WritePreamble(pr))
+	} else if opts.Zip.PreambleFile != "" {
+		log.Debugf("Adding preamble from %s", opts.Zip.PreambleFile)
 		pf, err := os.Open(opts.Zip.PreambleFile)
 		must(err)
 		defer pf.Close()
-		must(f.WritePreambleFile(pf))
+		must(f.WritePreamble(pf))
 	}
 	if opts.Zip.MainClass != "" {
 		must(f.AddManifest(opts.Zip.MainClass))
