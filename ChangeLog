@@ -1,3 +1,9 @@
+Version 1.1.0
+-------------
+    * `zip`: improve efficiency of `--preamble_file` option (#19)
+    * `zip`: explicitly make `--preamble_*` options mutually exclusive (#21)
+    * `zip`: read all non-zip data from `--preamble_from` file (#22)
+
 Version 1.0.4
 -------------
     * Write ar archives that can be read by llvm-ar.
