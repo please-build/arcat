@@ -45,6 +45,14 @@ func Preamble(path string) (*PreambleReader, error) {
 	// when the Reader is created, so this is the fastest (and easiest) way to find out where the zip
 	// data begins in the underlying file.
 	zipOffset := reflect.ValueOf(zr).Elem().FieldByName("baseOffset").Int()
+	// zip files written by archive/zip's Writer correctly report the byte offsets of their CDFH and
+	// EOCD entries, but this means the baseOffset calculated by the Reader will always be 0, even when
+	// non-zip data is prepended. We can detect this based on the reported byte offset of the zip
+	// header for the first file in the archive - for files that truly contain only zip data, this
+	// should also be 0. If it isn't, assume everything before the first file header is the preamble.
+	if zipOffset == 0 && len(zr.File) != 0 {
+		zipOffset = reflect.ValueOf(zr.File[0]).Elem().FieldByName("headerOffset").Int()
+	}
 	log.Debugf("%s: zip data begins at byte offset %d", path, zipOffset)
 	zr.Close()
 	f, err := os.Open(path)
