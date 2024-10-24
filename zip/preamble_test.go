@@ -30,6 +30,14 @@ func TestPreamble(t *testing.T) {
 			ZipFile:          "zip_preamble.zip",
 			PreambleChecksum: "038a57f3f807fa91bdd30239b9711fccf0d782fe2f036e03211852237e94d24c", // another.zip
 		},
+		{
+			ZipFile:          "arcat_preamble.zip",
+			PreambleChecksum: "46533b2dfa35ad537d3561ebee0c7af8941bc65363c1b188e1be6eaf79e9138c", // shebang_twolines.txt
+		},
+		{
+			ZipFile:          "empty.zip",
+			PreambleChecksum: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", // empty string
+		},
 	} {
 		t.Run(tc.ZipFile, func(t *testing.T) {
 			r := require.New(t)
