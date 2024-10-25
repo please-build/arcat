@@ -1,3 +1,8 @@
+Version 1.1.1
+-------------
+    * `zip`: enable `--preamble_from` to find preambles for zip files written by
+      `archive/zip` (#24)
+
 Version 1.1.0
 -------------
     * `zip`: improve efficiency of `--preamble_file` option (#19)
