@@ -7,6 +7,10 @@ github.com/klauspost/compress v1.13.6 h1:P76CopJELS0TiO2mebmnzgWaajssP/EszplttgQ
 github.com/klauspost/compress v1.13.6/go.mod h1:/3/Vjq9QcHkK5uEr5lBEmyoZ1iFhe47etQ6QUkpK6sk=
 github.com/peterebden/ar v0.0.0-20230524111245-4f7c7b065694 h1:pDBk3JWSIjS3gNxwEk1RjGdyZLsyTW4pOHaShBs9FK8=
 github.com/peterebden/ar v0.0.0-20230524111245-4f7c7b065694/go.mod h1:hpFkyhCgB5Rm8FK+ISypOE+9UyrCuL6MNcjPMB1s1ec=
+github.com/peterebden/ar v0.0.0-20241106124814-1b81dc631de1 h1:CQgyJ+FsNLRUiw64ISy3Xb381VWY2SCx/y58k6EgB8U=
+github.com/peterebden/ar v0.0.0-20241106124814-1b81dc631de1/go.mod h1:hpFkyhCgB5Rm8FK+ISypOE+9UyrCuL6MNcjPMB1s1ec=
+github.com/peterebden/ar v0.0.0-20241106125055-58ff4f2a458a h1:jBixB4zrYcDAJMakZSWNgBbUvvP639pX9WIsaepRuJM=
+github.com/peterebden/ar v0.0.0-20241106125055-58ff4f2a458a/go.mod h1:hpFkyhCgB5Rm8FK+ISypOE+9UyrCuL6MNcjPMB1s1ec=
 github.com/peterebden/go-cli-init/v5 v5.2.0 h1:T4WfGF+XjYCdVR4Y9KcTRVGpY5f6UelP0WDNuvn3Twc=
 github.com/peterebden/go-cli-init/v5 v5.2.0/go.mod h1:CAwh3oj26LCNv9zLsWCDWlPnERwAeQTDsHTSGqobV3Q=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
