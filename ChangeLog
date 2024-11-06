@@ -1,3 +1,7 @@
+Version 1.1.2
+-------------
+    * Fix entries in ar archives that may be incorrect for certain filename lengths.
+
 Version 1.1.1
 -------------
     * `zip`: enable `--preamble_from` to find preambles for zip files written by
