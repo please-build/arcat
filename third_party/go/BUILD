@@ -57,6 +57,7 @@ go_module(
     name = "testify",
     install = [
         "assert",
+        "assert/yaml",
         "require",
     ],
     licences = ["MIT"],
