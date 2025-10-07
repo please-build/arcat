@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/peterebden/ar"
+	"github.com/please-build/ar"
 	"gopkg.in/op/go-logging.v1"
 )
 
@@ -45,14 +45,17 @@ func Create(srcs []string, out string, combine, rename bool) error {
 	defer f.Close()
 	bw := bufio.NewWriter(f)
 	defer bw.Flush()
-	w := ar.NewWriter(bw)
+	var w *ar.Writer
 	// Write BSD-style names on OSX, GNU-style ones on Linux
 	if runtime.GOOS == "darwin" {
-		if err := w.WriteGlobalHeader(); err != nil {
+		w = ar.NewWriter(bw, ar.BSD)
+	} else {
+		w = ar.NewWriter(bw, ar.GNU)
+		allSrcs, err := allSourceNames(srcs, combine)
+		if err != nil {
 			return err
 		}
-	} else {
-		if err := w.WriteGlobalHeaderForLongFiles(allSourceNames(srcs, combine)); err != nil {
+		if err := w.WriteStringTable(allSrcs); err != nil {
 			return err
 		}
 	}
@@ -64,7 +67,10 @@ func Create(srcs []string, out string, combine, rename bool) error {
 		}
 		if combine {
 			// Read archive & write its contents in
-			r := ar.NewReader(f)
+			r, err := ar.NewReader(f)
+			if err != nil {
+				return err
+			}
 			for {
 				hdr, err := r.Next()
 				if err != nil {
@@ -72,9 +78,6 @@ func Create(srcs []string, out string, combine, rename bool) error {
 						break
 					}
 					return err
-				} else if hdr.Name == "/" || hdr.Name == "__.SYMDEF SORTED" || hdr.Name == "__.SYMDEF" {
-					log.Debug("skipping symbol table")
-					continue
 				}
 				// Zero things out
 				hdr.ModTime = mtime
@@ -125,15 +128,18 @@ func Find() ([]string, error) {
 }
 
 // allSourceNames returns the name of all source files that we will add to the archive.
-func allSourceNames(srcs []string, combine bool) []string {
+func allSourceNames(srcs []string, combine bool) ([]string, error) {
 	if !combine {
-		return srcs
+		return srcs, nil
 	}
 	ret := []string{}
 	for _, src := range srcs {
 		f, err := os.Open(src)
 		if err == nil {
-			r := ar.NewReader(f)
+			r, err := ar.NewReader(f)
+			if err != nil {
+				return nil, err
+			}
 			for {
 				hdr, err := r.Next()
 				if err != nil {
@@ -143,5 +149,5 @@ func allSourceNames(srcs []string, combine bool) []string {
 			}
 		}
 	}
-	return ret
+	return ret, nil
 }
