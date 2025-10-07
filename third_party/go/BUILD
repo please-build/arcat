@@ -61,7 +61,7 @@ go_module(
     ],
     licences = ["MIT"],
     module = "github.com/stretchr/testify",
-    version = "v1.7.0",
+    version = "v1.11.1",
     visibility = ["PUBLIC"],
     deps = [
         ":difflib",
@@ -99,8 +99,8 @@ go_module(
 go_module(
     name = "ar",
     licences = ["MIT"],
-    module = "github.com/peterebden/ar",
-    version = "v0.0.0-20241106125055-58ff4f2a458a",
+    module = "github.com/please-build/ar",
+    version = "v0.0.0-20251007213405-d4c8bd5ce6fe",
     visibility = ["PUBLIC"],
 )
 
