@@ -1,3 +1,7 @@
+Version 1.2.0
+-------------
+    * Correctly handle 16-byte file names in ar archives (#28)
+
 Version 1.1.2
 -------------
     * Fix entries in ar archives that may be incorrect for certain filename lengths.
