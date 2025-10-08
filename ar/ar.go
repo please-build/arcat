@@ -3,6 +3,7 @@ package ar
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"io/fs"
 	"os"
@@ -40,7 +41,7 @@ func Create(srcs []string, out string, combine, rename bool) error {
 	log.Debug("Writing ar to %s", out)
 	f, err := os.Create(out)
 	if err != nil {
-		return err
+		return fmt.Errorf("create %s: %w", out, err)
 	}
 	defer f.Close()
 	bw := bufio.NewWriter(f)
@@ -53,23 +54,23 @@ func Create(srcs []string, out string, combine, rename bool) error {
 		w = ar.NewWriter(bw, ar.GNU)
 		allSrcs, err := allSourceNames(srcs, combine)
 		if err != nil {
-			return err
+			return fmt.Errorf("find source file names: %w", err)
 		}
 		if err := w.WriteStringTable(allSrcs); err != nil {
-			return err
+			return fmt.Errorf("write ar string table: %w", err)
 		}
 	}
 	for _, src := range srcs {
 		log.Debug("ar source file: %s", src)
 		f, err := os.Open(src)
 		if err != nil {
-			return err
+			return fmt.Errorf("open %s: %w", src, err)
 		}
 		if combine {
 			// Read archive & write its contents in
 			r, err := ar.NewReader(f)
 			if err != nil {
-				return err
+				return fmt.Errorf("read %s: %w", src, err)
 			}
 			for {
 				hdr, err := r.Next()
@@ -77,7 +78,7 @@ func Create(srcs []string, out string, combine, rename bool) error {
 					if err == io.EOF {
 						break
 					}
-					return err
+					return fmt.Errorf("read next file header: %w", err)
 				}
 				// Zero things out
 				hdr.ModTime = mtime
@@ -87,16 +88,16 @@ func Create(srcs []string, out string, combine, rename bool) error {
 				hdr.Mode &= ^0100000
 				log.Debug("copying '%s' in from %s, mode %x", hdr.Name, src, hdr.Mode)
 				if err := w.WriteHeader(hdr); err != nil {
-					return err
+					return fmt.Errorf("write ar header: %w", err)
 				} else if _, err = io.Copy(w, r); err != nil {
-					return err
+					return fmt.Errorf("write ar data: %w", err)
 				}
 			}
 		} else {
 			// Write in individual file
 			info, err := os.Lstat(src)
 			if err != nil {
-				return err
+				return fmt.Errorf("lstat %s: %w", src, err)
 			}
 			hdr := &ar.Header{
 				Name:    src,
@@ -106,9 +107,9 @@ func Create(srcs []string, out string, combine, rename bool) error {
 			}
 			log.Debug("creating file %s", hdr.Name)
 			if err := w.WriteHeader(hdr); err != nil {
-				return err
+				return fmt.Errorf("write ar header: %w", err)
 			} else if _, err := io.Copy(w, f); err != nil {
-				return err
+				return fmt.Errorf("write ar data: %w", err)
 			}
 		}
 		f.Close()
