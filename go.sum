@@ -7,8 +7,8 @@ github.com/klauspost/compress v1.13.6 h1:P76CopJELS0TiO2mebmnzgWaajssP/EszplttgQ
 github.com/klauspost/compress v1.13.6/go.mod h1:/3/Vjq9QcHkK5uEr5lBEmyoZ1iFhe47etQ6QUkpK6sk=
 github.com/peterebden/go-cli-init/v5 v5.2.0 h1:T4WfGF+XjYCdVR4Y9KcTRVGpY5f6UelP0WDNuvn3Twc=
 github.com/peterebden/go-cli-init/v5 v5.2.0/go.mod h1:CAwh3oj26LCNv9zLsWCDWlPnERwAeQTDsHTSGqobV3Q=
-github.com/please-build/ar v0.0.0-20251007213405-d4c8bd5ce6fe h1:0di7jrH0bgbJvl19JNpNAyP+4+yVvx2UHKFtW1Y5aCg=
-github.com/please-build/ar v0.0.0-20251007213405-d4c8bd5ce6fe/go.mod h1:d0kfgTsdJGeKNmpnBKgsZGOCwbfYCTQ+nHKc2hE65ec=
+github.com/please-build/ar v0.0.0-20251008230604-d346232a9254 h1:Kyk3pq9DOBbdRfqA4t0JxakrFc/c79hlEYtByqmOAps=
+github.com/please-build/ar v0.0.0-20251008230604-d346232a9254/go.mod h1:d0kfgTsdJGeKNmpnBKgsZGOCwbfYCTQ+nHKc2hE65ec=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
