@@ -1,3 +1,10 @@
+Version 1.2.1
+-------------
+    * ar: treat file names containing spaces like long file names when writing BSD-style archives (#33)
+    * ar: ensure a trailing slash is appended to all file names when writing GNU-style archives (#33)
+    * ar: ensure buffer is completely filled when reading the data section of an archive member (#33)
+    * ar: don't write a file mode for string tables in GNU-style archives (#33)
+
 Version 1.2.0
 -------------
     * Correctly handle 16-byte file names in ar archives (#28)
