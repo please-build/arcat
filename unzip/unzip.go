@@ -1,4 +1,4 @@
-// Package unzip implements unzipping for jarcat.
+// Package unzip implements unzipping for arcat.
 // We implement this to avoid needing a runtime dependency on unzip,
 // which is not a profound package but not installed everywhere by default.
 package unzip

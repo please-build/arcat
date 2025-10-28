@@ -1,4 +1,4 @@
-// Package zip implements functions for jarcat that manipulate .zip files.
+// Package zip implements functions for arcat that manipulate .zip files.
 package zip
 
 import (

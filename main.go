@@ -1,4 +1,4 @@
-// Package main implements jarcat, a program to efficiently concatenate .zip files.
+// Package main implements arcat, a program to efficiently concatenate .zip files.
 // Originally this was pretty simple and that was all it could do, over time it's
 // gained a bunch more features on a more or less as needed basis.
 //
@@ -172,7 +172,7 @@ func main() {
 		opts.Zip.ExcludeInternalPrefix = javaExcludePrefixes
 	}
 
-	tempFile, err := ioutil.TempFile(".", "jarcat-")
+	tempFile, err := ioutil.TempFile(".", "arcat-")
 	must(err)
 	filename := tempFile.Name()
 
