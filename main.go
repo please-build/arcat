@@ -44,6 +44,7 @@ var opts = struct {
 	Zip struct {
 		In                    flags.StdinStrings  `short:"i" long:"input" description:"Input directory" required:"true"`
 		Out                   string            `short:"o" long:"output" env:"OUT" description:"Output filename" required:"true"`
+		Include               []string          `long:"include" description:"Add members of these zip files to generated zip file (before any others)"`
 		Suffix                []string          `short:"s" long:"suffix" default:".jar" description:"Suffix of files to include"`
 		ExcludeSuffix         []string          `short:"e" long:"exclude_suffix" description:"Suffix of files to exclude"`
 		ExcludeTools          []string          `long:"exclude_tools" env:"TOOLS" env-delim:" " description:"Tools to exclude from the generated zipfile"`
@@ -220,6 +221,9 @@ func main() {
 		must(err)
 		defer pf.Close()
 		must(f.WritePreamble(pf))
+	}
+	for _, filename := range opts.Zip.Include {
+		must(f.AddZipFile(filename))
 	}
 	if opts.Zip.MainClass != "" {
 		must(f.AddManifest(opts.Zip.MainClass))
