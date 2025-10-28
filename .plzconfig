@@ -2,7 +2,7 @@
 preloadsubincludes = ///go//build_defs:go
 
 [please]
-version = >=17.11.0
+version = >=17.21.0
 
 [Plugin "go"]
 Target = //plugins:go
