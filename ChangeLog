@@ -1,3 +1,9 @@
+Version 1.3.0
+-------------
+    * zip: change temporary output file pattern from `jarcat-*` to `arcat-*` (#36)
+    * zip: add `--include` option, for adding members of certain zip files to the output zip file before
+      those in zip files discovered in input directories (#37)
+
 Version 1.2.1
 -------------
     * ar: treat file names containing spaces like long file names when writing BSD-style archives (#33)
