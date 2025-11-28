@@ -1,3 +1,7 @@
+Version 1.3.1
+-------------
+    * ar: skip symbol tables when reading BSD-variant ar archives (#39)
+
 Version 1.3.0
 -------------
     * zip: change temporary output file pattern from `jarcat-*` to `arcat-*` (#36)
