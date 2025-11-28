@@ -9,6 +9,8 @@ github.com/peterebden/go-cli-init/v5 v5.2.0 h1:T4WfGF+XjYCdVR4Y9KcTRVGpY5f6UelP0
 github.com/peterebden/go-cli-init/v5 v5.2.0/go.mod h1:CAwh3oj26LCNv9zLsWCDWlPnERwAeQTDsHTSGqobV3Q=
 github.com/please-build/ar v0.0.0-20251008230604-d346232a9254 h1:Kyk3pq9DOBbdRfqA4t0JxakrFc/c79hlEYtByqmOAps=
 github.com/please-build/ar v0.0.0-20251008230604-d346232a9254/go.mod h1:d0kfgTsdJGeKNmpnBKgsZGOCwbfYCTQ+nHKc2hE65ec=
+github.com/please-build/ar v0.0.0-20251128102243-20fe5956df94 h1:HMGl3GsklLOGFriw51we+FLV4Oh3FgwrYxCKSK1N3jU=
+github.com/please-build/ar v0.0.0-20251128102243-20fe5956df94/go.mod h1:d0kfgTsdJGeKNmpnBKgsZGOCwbfYCTQ+nHKc2hE65ec=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=

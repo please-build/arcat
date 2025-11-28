@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/klauspost/compress v1.13.6
 	github.com/peterebden/go-cli-init/v5 v5.2.0
-	github.com/please-build/ar v0.0.0-20251008230604-d346232a9254
+	github.com/please-build/ar v0.0.0-20251128102243-20fe5956df94
 	github.com/stretchr/testify v1.11.1
 	github.com/ulikunitz/xz v0.5.10
 	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8
