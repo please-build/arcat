@@ -101,7 +101,7 @@ go_module(
     name = "ar",
     licences = ["MIT"],
     module = "github.com/please-build/ar",
-    version = "v0.0.0-20251008230604-d346232a9254",
+    version = "v0.0.0-20251128102243-20fe5956df94",
     visibility = ["PUBLIC"],
 )
 
