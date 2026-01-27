@@ -17,6 +17,8 @@ import (
 
 	"github.com/klauspost/compress/zstd"
 	"github.com/xi2/xz"
+	"path/filepath"
+	 securejoin "github.com/cyphar/filepath-securejoin"
 )
 
 // concurrency controls the maximum level of concurrency we'll allow.
@@ -47,6 +49,9 @@ type extractor struct {
 }
 
 func (e *extractor) Extract() error {
+	if err := e.normalizeOut(); err != nil {
+        return err
+    }
 	if r, err := zip.OpenReader(e.In); err == nil {
 		defer r.Close()
 		return e.extractZip(r)
@@ -88,6 +93,17 @@ func isStructuralError(err error) bool {
 	_, ok := err.(bzip2.StructuralError)
 	return ok
 }
+func (e *extractor) normalizeOut() error {
+    if e.Out == "" {
+        e.Out = "." // default: current dir
+    }
+    abs, err := filepath.Abs(e.Out)
+    if err != nil {
+        return err
+    }
+    e.Out = abs
+    return nil
+}
 
 func (e *extractor) extractTar(f io.Reader) error {
 	r := tar.NewReader(f)
@@ -99,7 +115,11 @@ func (e *extractor) extractTar(f io.Reader) error {
 			}
 			return err
 		}
-		out := path.Join(e.Out, strings.TrimLeft(strings.TrimPrefix(hdr.Name, e.Prefix), "/"))
+		name := strings.TrimLeft(strings.TrimPrefix(hdr.Name, e.Prefix), "/")
+		out, err := securejoin.SecureJoin(e.Out, name)
+		if err != nil {
+		    return err
+		}
 		if err := e.makeParentDir(out); err != nil {
 			return err
 		}
@@ -117,6 +137,18 @@ func (e *extractor) extractTar(f io.Reader) error {
 				return err
 			}
 		case tar.TypeSymlink:
+			// Require relative symlink targets.
+		    if filepath.IsAbs(hdr.Linkname) {
+		        return fmt.Errorf("reject symlink absolute target: %q", hdr.Linkname)
+		    }
+		
+		    // Ensure the symlink target doesn't escape when interpreted relative to the link's directory.
+		    linkDir := filepath.Dir(out)
+		    _, err := securejoin.SecureJoin(linkDir, hdr.Linkname)
+		    if err != nil {
+		        return fmt.Errorf("reject symlink traversal target %q: %w", hdr.Linkname, err)
+		    }
+
 			if err := os.Symlink(hdr.Linkname, out); err != nil {
 				return err
 			}
@@ -167,7 +199,11 @@ func (e *extractor) extractFile(f *zip.File) error {
 		return err
 	}
 	defer r.Close()
-	out := path.Join(e.Out, f.Name)
+	out, err := securejoin.SecureJoin(e.Out, f.Name)
+	if err != nil {
+	    return err
+	}
+
 	if e.File != "" {
 		out = e.Out
 	}
