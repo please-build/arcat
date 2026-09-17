@@ -339,12 +339,16 @@ func (f *File) shouldInclude(name string) bool {
 	return false
 }
 
-// AddInitPyFiles adds an __init__.py file to every directory in the zip file that doesn't already have one.
+// AddInitPyFiles adds an __init__.py file to every directory in the zip file that contains an
+// importable Python file (.py, .pyc, .pyo, .pyi or .so) and doesn't already have one, and to
+// their parent directories.
 func (f *File) AddInitPyFiles() error {
 	s := make([]string, 0, len(f.files))
 	sos := map[string]struct{}{}
 	for p := range f.files {
-		s = append(s, p)
+		if isImportable(p) {
+			s = append(s, p)
+		}
 		// We use this to check that we don't shadow files that look importable.
 		if strings.HasSuffix(p, ".so") {
 			p = strings.TrimSuffix(p, ".so")
@@ -388,6 +392,16 @@ func (f *File) AddInitPyFiles() error {
 		}
 	}
 	return nil
+}
+
+// isImportable returns true if the given path looks like an importable Python file.
+func isImportable(p string) bool {
+	for _, suffix := range []string{".py", ".pyc", ".pyo", ".pyi", ".so"} {
+		if strings.HasSuffix(p, suffix) {
+			return true
+		}
+	}
+	return false
 }
 
 // AddManifest adds a manifest to the given zip writer with a Main-Class entry (and a couple of others)
