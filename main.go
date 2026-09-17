@@ -42,30 +42,30 @@ var opts = struct {
 	Verbosity logging.Verbosity `short:"v" long:"verbosity" default:"warning" description:"Verbosity of output (higher number = more output)"`
 
 	Zip struct {
-		In                    flags.StdinStrings  `short:"i" long:"input" description:"Input directory" required:"true"`
-		Out                   string            `short:"o" long:"output" env:"OUT" description:"Output filename" required:"true"`
-		Include               []string          `long:"include" description:"Add members of these zip files to generated zip file (before any others)"`
-		Suffix                []string          `short:"s" long:"suffix" default:".jar" description:"Suffix of files to include"`
-		ExcludeSuffix         []string          `short:"e" long:"exclude_suffix" description:"Suffix of files to exclude"`
-		ExcludeTools          []string          `long:"exclude_tools" env:"TOOLS" env-delim:" " description:"Tools to exclude from the generated zipfile"`
-		ExcludeInternalPrefix []string          `short:"x" long:"exclude_internal_prefix" description:"Prefix of files to exclude"`
-		IncludeInternalPrefix []string          `short:"t" long:"include_internal_prefix" description:"Prefix of files to include"`
-		StripPrefix           string            `long:"strip_prefix" description:"Prefix to strip off file names"`
-		Preamble              string            `short:"p" long:"preamble" description:"Prepend this string to generated zip file"`
-		PreambleFrom          string            `long:"preamble_from" description:"Prepend non-zip leading data from this file to generated zip file"`
-		PreambleFile          string            `long:"preamble_file" description:"Prepend contents of this file to generated zip file"`
-		MainClass             string            `short:"m" long:"main_class" description:"Write a Java manifest file containing the given main class."`
-		Manifest              string            `long:"manifest" description:"Use the given file as a Java manifest"`
-		ExcludeJavaPrefixes   bool              `short:"j" long:"exclude_java_prefixes" description:"Use default Java exclusions"`
-		Strict                bool              `long:"strict" description:"Disallow duplicate files"`
-		IncludeOther          bool              `long:"include_other" description:"Add files that are not jar files as well"`
-		AddInitPy             bool              `long:"add_init_py" description:"Adds __init__.py files to all directories"`
-		StripPy               bool              `long:"strip_py" description:"Strips .py files when there is a corresponding .pyc"`
-		DumbMode              bool              `short:"d" long:"dumb" description:"Dumb mode, an alias for --suffix='' --exclude_suffix='' --include_other"`
-		NoDirEntries          bool              `short:"n" long:"nodir_entries" description:"Don't add directory entries to zip"`
-		RenameDirs            map[string]string `short:"r" long:"rename_dir" description:"Rename directories within zip file"`
-		StoreSuffix           []string          `short:"u" long:"store_suffix" description:"Suffix of filenames to store instead of deflate (i.e. without compression). Note that this only affects files found with --include_other."`
-		Prefix                string            `long:"prefix" description:"Prefix all entries with this directory name."`
+		In                    flags.StdinStrings `short:"i" long:"input" description:"Input directory" required:"true"`
+		Out                   string             `short:"o" long:"output" env:"OUT" description:"Output filename" required:"true"`
+		Include               []string           `long:"include" description:"Add members of these zip files to generated zip file (before any others)"`
+		Suffix                []string           `short:"s" long:"suffix" default:".jar" description:"Suffix of files to include"`
+		ExcludeSuffix         []string           `short:"e" long:"exclude_suffix" description:"Suffix of files to exclude"`
+		ExcludeTools          []string           `long:"exclude_tools" env:"TOOLS" env-delim:" " description:"Tools to exclude from the generated zipfile"`
+		ExcludeInternalPrefix []string           `short:"x" long:"exclude_internal_prefix" description:"Prefix of files to exclude"`
+		IncludeInternalPrefix []string           `short:"t" long:"include_internal_prefix" description:"Prefix of files to include"`
+		StripPrefix           string             `long:"strip_prefix" description:"Prefix to strip off file names"`
+		Preamble              string             `short:"p" long:"preamble" description:"Prepend this string to generated zip file"`
+		PreambleFrom          string             `long:"preamble_from" description:"Prepend non-zip leading data from this file to generated zip file"`
+		PreambleFile          string             `long:"preamble_file" description:"Prepend contents of this file to generated zip file"`
+		MainClass             string             `short:"m" long:"main_class" description:"Write a Java manifest file containing the given main class."`
+		Manifest              string             `long:"manifest" description:"Use the given file as a Java manifest"`
+		ExcludeJavaPrefixes   bool               `short:"j" long:"exclude_java_prefixes" description:"Use default Java exclusions"`
+		Strict                bool               `long:"strict" description:"Disallow duplicate files"`
+		IncludeOther          bool               `long:"include_other" description:"Add files that are not jar files as well"`
+		AddInitPy             bool               `long:"add_init_py" description:"Adds __init__.py files to directories containing importable Python files, and their parents."`
+		StripPy               bool               `long:"strip_py" description:"Strips .py files when there is a corresponding .pyc"`
+		DumbMode              bool               `short:"d" long:"dumb" description:"Dumb mode, an alias for --suffix='' --exclude_suffix='' --include_other"`
+		NoDirEntries          bool               `short:"n" long:"nodir_entries" description:"Don't add directory entries to zip"`
+		RenameDirs            map[string]string  `short:"r" long:"rename_dir" description:"Rename directories within zip file"`
+		StoreSuffix           []string           `short:"u" long:"store_suffix" description:"Suffix of filenames to store instead of deflate (i.e. without compression). Note that this only affects files found with --include_other."`
+		Prefix                string             `long:"prefix" description:"Prefix all entries with this directory name."`
 	} `command:"zip" alias:"z" description:"Writes an output zipfile"`
 
 	Tar struct {

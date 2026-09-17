@@ -145,6 +145,26 @@ func TestIsSamePath(t *testing.T) {
 	assert.False(t, samePaths("/a", "./a"))
 }
 
+func TestAddInitPyFiles(t *testing.T) {
+	f := NewFile("add_init_py_test.zip", false)
+	require.NoError(t, f.WriteFile("pkg/module.py", []byte{}, 0644))
+	require.NoError(t, f.WriteFile("pkg/sub/thing.so", []byte{}, 0644))
+	require.NoError(t, f.WriteFile("data/resource.txt", []byte{}, 0644))
+	require.NoError(t, f.AddInitPyFiles())
+	f.Close()
+
+	r, err := zip.OpenReader("add_init_py_test.zip")
+	require.NoError(t, err)
+	defer r.Close()
+	names := make(map[string]bool, len(r.File))
+	for _, zf := range r.File {
+		names[zf.Name] = true
+	}
+	assert.True(t, names["pkg/__init__.py"])
+	assert.True(t, names["pkg/sub/__init__.py"])
+	assert.False(t, names["data/__init__.py"])
+}
+
 func TestIsPy37(t *testing.T) {
 	f := NewFile("test_is_py37.zip", false)
 	assert.False(t, f.isPy37([]byte("\x03\xf3\r\n"))) // 2.7.15
