@@ -22,3 +22,9 @@ genrule(
     cmd = "echo VERSION = \\\"$(cat $SRCS)\\\" > $OUT",
     visibility = ["//package:all"],
 )
+
+filegroup(
+    name = "go_mod",
+    srcs = ["go.mod"],
+    visibility = ["PUBLIC"],
+)

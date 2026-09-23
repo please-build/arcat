@@ -9,3 +9,15 @@ Target = //plugins:go
 pleasegotool = ///go//tools/please_go:bootstrap
 gotool = //third_party/go:toolchain|go
 importpath = github.com/please-build/arcat
+modfile = //:go_mod
+
+[alias "puku"]
+cmd = run //third_party/binary:puku --
+positionallabels = true
+subcommand = fmt
+subcommand = licences
+subcommand = lint
+subcommand = migrate
+subcommand = sync
+subcommand = version
+subcommand = watch
