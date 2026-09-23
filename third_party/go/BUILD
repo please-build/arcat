@@ -9,7 +9,7 @@ go_toolchain(
         "linux_amd64",
         "linux_arm64",
     ],
-    version = "1.25.3",
+    version = "1.25.14",
     tags = [
         "osusergo",
         "netgo",
