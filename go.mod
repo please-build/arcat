@@ -1,6 +1,6 @@
 module github.com/please-build/arcat
 
-go 1.17
+go 1.27.1
 
 require (
 	github.com/klauspost/compress v1.13.6
