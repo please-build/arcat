@@ -9,11 +9,11 @@ go_toolchain(
         "linux_amd64",
         "linux_arm64",
     ],
-    version = "1.27.1",
     tags = [
-        "osusergo",
         "netgo",
+        "osusergo",
     ],
+    version = "1.27.1",
 )
 
 go_module(
@@ -28,7 +28,7 @@ go_module(
     name = "go-flags",
     licences = ["BSD-3-Clause"],
     module = "github.com/thought-machine/go-flags",
-    version = "v1.6.0",
+    version = "v1.7.0",
     visibility = ["PUBLIC"],
     deps = [":xsys"],
 )
@@ -37,7 +37,7 @@ go_module(
     name = "cli-init",
     install = ["..."],
     module = "github.com/peterebden/go-cli-init/v5",
-    version = "v5.2.0",
+    version = "v5.2.1",
     deps = [
         ":go-flags",
         ":humanize",
@@ -50,7 +50,7 @@ go_module(
     name = "xsys",
     install = ["..."],
     module = "golang.org/x/sys",
-    version = "v0.0.0-20210823070655-63515b42dcdf",
+    version = "v0.48.0",
 )
 
 go_module(
@@ -62,7 +62,7 @@ go_module(
     ],
     licences = ["MIT"],
     module = "github.com/stretchr/testify",
-    version = "v1.11.1",
+    version = "v1.12.1",
     visibility = ["PUBLIC"],
     deps = [
         ":difflib",
@@ -84,7 +84,7 @@ go_module(
     name = "yaml",
     licences = ["MIT"],
     module = "gopkg.in/yaml.v3",
-    version = "v3.0.0-20210107192922-496545a6307b",
+    version = "v3.0.1",
     visibility = ["PUBLIC"],
 )
 
@@ -114,7 +114,7 @@ go_module(
     ],
     licences = ["BSD-3-Clause"],
     module = "github.com/ulikunitz/xz",
-    version = "v0.5.10",
+    version = "v0.5.17",
     visibility = ["PUBLIC"],
 )
 
@@ -139,7 +139,7 @@ go_module(
     ],
     licences = ["Apache-2.0"],
     module = "github.com/klauspost/compress",
-    version = "v1.13.6",
+    version = "v1.20.0",
     visibility = ["PUBLIC"],
 )
 
@@ -147,7 +147,7 @@ go_module(
     name = "humanize",
     licences = ["MIT"],
     module = "github.com/dustin/go-humanize",
-    version = "v1.0.0",
+    version = "v1.1.0",
     visibility = ["PUBLIC"],
 )
 
@@ -162,7 +162,7 @@ go_module(
     ],
     licences = ["BSD-3-Clause"],
     module = "golang.org/x/crypto",
-    version = "v0.0.0-20210920023735-84f357641f63",
+    version = "v0.57.0",
     visibility = ["PUBLIC"],
     deps = [":xterm"],
 )
@@ -171,7 +171,13 @@ go_module(
     name = "xterm",
     licences = ["BSD-3-Clause"],
     module = "golang.org/x/term",
-    version = "v0.0.0-20210615171337-6886f2dfbf5b",
+    version = "v0.46.0",
     visibility = ["PUBLIC"],
     deps = [":xsys"],
+)
+
+go_repo(
+    licences = ["MIT"],
+    module = "go.yaml.in/yaml/v3",
+    version = "v3.0.5",
 )
