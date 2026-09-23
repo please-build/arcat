@@ -26,4 +26,5 @@ genrule(
 filegroup(
     name = "go_mod",
     srcs = ["go.mod"],
+    visibility = ["PUBLIC"],
 )
